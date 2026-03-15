@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Representative AI Models for Single-Cell Data Analysis</title>
+  <style>
+    :root {
+      --bg: #f8f8f6;
+      --paper: #ffffff;
+      --paper-soft: #fcfcfa;
+      --ink: #1b1b18;
+      --ink-soft: #4d4d47;
+      --muted: #6f6f67;
+      --line: #d9d8d2;
+      --line-strong: #bdbcb3;
+      --accent: #1f5a96;
+      --accent-soft: #eaf1f8;
+      --shadow: 0 8px 24px rgba(20, 20, 18, 0.05);
+      --radius: 6px;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --serif: "Georgia", "Times New Roman", "Songti SC", "Noto Serif SC", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: linear-gradient(180deg, #f5f5f2 0%, #f8f8f6 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 28px 20px 42px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 22px 0 0;
+    }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0 0 20px;
+      max-width: 980px;
+      font-family: var(--serif);
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 700;
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+    }
+
+    /* 横线分隔 */
+    .divider {
+      border: none;
+      border-top: 2px solid var(--ink);
+      margin: 0 0 18px 0;
+    }
+
+    /* 链接列表 */
+    .supplementary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    /* 链接项 - 统一图标风格 */
+    .supplementary-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .supplementary-item:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: translateX(4px);
+    }
+
+    .supplementary-item.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+    }
+
+    /* 统一图标容器 */
+    .item-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      flex-shrink: 0;
+    }
+
+    .supplementary-item:hover .item-icon,
+    .supplementary-item.active .item-icon {
+      background: var(--accent);
+    }
+
+    /* 统一图标样式 - 表格图标 */
+    .item-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+    }
+
+    .supplementary-item:hover .item-icon svg,
+    .supplementary-item.active .item-icon svg {
+      color: #ffffff;
+    }
+
+    /* 链接文字 */
+    .item-text {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .supplementary-item:hover .item-text,
+    .supplementary-item.active .item-text {
+      color: var(--accent);
+    }
+
+    /* 箭头 */
+    .item-arrow {
+      width: 18px;
+      height: 18px;
+      color: var(--line-strong);
+      transition: transform 0.2s ease;
+    }
+
+    .supplementary-item:hover .item-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .supplementary-item.active .item-arrow {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    /* 内容显示区域 - 横线下方 */
+    .content-display {
+      display: none;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      margin-top: 6px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .content-display.visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: #f6f5f1;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .content-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .content-close {
+      padding: 6px 12px;
+      border: 1px solid var(--line-strong);
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .content-close:hover {
+      background: #fee2e2;
+      color: #dc2626;
+      border-color: #fecaca;
+    }
+
+    .content-body {
+      padding: 0;
+      min-height: 300px;
+    }
+
+    /* iframe 样式 - 去除边框 */
+    .content-iframe {
+      width: 100%;
+      height: 70vh;
+      border: none;
+      display: block;
+    }
+
+    /* 尝试去除内层框架样式 */
+    .content-body :deep(.hero),
+    .content-body :deep(.wrap),
+    .content-body :deep(body) {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .loading {
+      color: var(--muted);
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .error-msg {
+      color: #dc2626;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .error-hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    @media (max-width: 720px) {
+      .wrap {
+        padding: 18px 12px 28px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+      
+      .content-iframe {
+        height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Supplementary Information</div>
+      <h1>AI-Driven Crop Single-Cell Biology: Advances and Perspectives</h1>
+    </section>
+
+    <!-- 横线 -->
+    <hr class="divider">
+
+    <!-- 补充材料链接 -->
+    <div class="supplementary-list">
+      
+      <!-- Table S1 -->
+      <div class="supplementary-item" onclick="showContent('Table_S1.html', 'Supplementary Table 1', this)">
+        <div class="item-icon">
+          <!-- 统一表格图标 -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+        </div>
+        <span class="item-text">Supplementary Table 1. Representative Plant Single-Cell Studies</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </div>
+
+      <!-- Table S2 -->
+      <div class="supplementary-item" onclick="showContent('Table_S2.html', 'Supplementary Table 2', this)">
+        <div class="item-icon">
+          <!-- 统一表格图标 -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+        </div>
+        <span class="item-text">Supplementary Table 2. Representative AI Models for Single-Cell Data Analysis</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </div>
+
+    </div>
+
+    <!-- 统一内容显示区域（横线下方） -->
+    <div id="contentDisplay" class="content-display">
+      <div class="content-header">
+        <span id="contentTitle" class="content-title">加载中...</span>
+        <button class="content-close" onclick="closeContent()">✕ close</button>
+      </div>
+      <div id="contentBody" class="content-body">
+        <div class="loading">正在加载内容...</div>
+      </div>
+    </div>
+
+    <div class="footer-note"></div>
+  </div>
+
+  <script>
+    let currentUrl = null;
+    let useIframe = false;
+
+    function showContent(url, title, element) {
+      const display = document.getElementById('contentDisplay');
+      const titleEl = document.getElementById('contentTitle');
+      const bodyEl = document.getElementById('contentBody');
+      
+      // 如果点击的是当前已打开的，则关闭
+      if (currentUrl === url && display.classList.contains('visible')) {
+        closeContent();
+        return;
+      }
+
+      // 更新激活状态
+      document.querySelectorAll('.supplementary-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+
+      // 更新标题
+      titleEl.textContent = title;
+      
+      // 显示容器
+      display.classList.add('visible');
+      currentUrl = url;
+
+      // 加载内容
+      bodyEl.innerHTML = '<div class="loading">正在加载内容...</div>';
+      
+      // 首先尝试使用 fetch
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('HTTP error');
+          return response.text();
+        })
+        .then(html => {
+          // 检查是否是本地文件协议导致的 CORS 错误
+          if (html.includes('<!DOCTYPE html>')) {
+            // 成功获取，处理内容
+            processContent(html, bodyEl, url);
+          } else {
+            throw new Error('Invalid content');
+          }
+        })
+        .catch(error => {
+          // fetch 失败，回退到 iframe 方式
+          console.log('Fetch failed, using iframe fallback:', error);
+          useIframe = true;
+          bodyEl.innerHTML = `<iframe class="content-iframe" src="${url}" frameborder="0" scrolling="auto"></iframe>`;
+        });
+
+      // 滚动到内容区
+      setTimeout(() => {
+        display.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    function processContent(html, container, url) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      
+      // 提取 body 内容
+      let content = doc.body.innerHTML;
+      
+      // 移除内层框架元素（根据您提供的 Table_S1.html 结构）
+      // 移除 hero section（标题部分）
+      const heroStyle = doc.querySelector('style');
+      if (heroStyle) {
+        // 创建临时容器处理
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content;
+        
+        // 移除 hero section
+        const heroSection = tempDiv.querySelector('.hero');
+        if (heroSection) {
+          heroSection.remove();
+        }
+        
+        // 移除 wrap 的 padding，让内容更紧凑
+        const wrapDiv = tempDiv.querySelector('.wrap');
+        if (wrapDiv) {
+          wrapDiv.style.padding = '0';
+          wrapDiv.style.maxWidth = '100%';
+        }
+        
+        content = tempDiv.innerHTML;
+      }
+      
+      // 如果内容看起来还是完整的页面，使用 iframe
+      if (content.includes('<section class="hero">') || content.includes('<!DOCTYPE')) {
+        container.innerHTML = `<iframe class="content-iframe" src="${url}" frameborder="0" scrolling="auto" onload="hideIframeBorders(this)"></iframe>`;
+      } else {
+        container.innerHTML = content;
+      }
+    }
+
+    // 尝试通过 JavaScript 隐藏 iframe 内部边框
+    function hideIframeBorders(iframe) {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        if (iframeDoc) {
+          // 移除内层 hero
+          const hero = iframeDoc.querySelector('.hero');
+          if (hero) hero.style.display = 'none';
+          
+          // 调整 wrap padding
+          const wrap = iframeDoc.querySelector('.wrap');
+          if (wrap) {
+            wrap.style.padding = '20px';
+            wrap.style.maxWidth = '100%';
+          }
+        }
+      } catch (e) {
+        // 跨域访问会失败，忽略错误
+        console.log('Cannot access iframe content due to CORS');
+      }
+    }
+
+    function closeContent() {
+      const display = document.getElementById('contentDisplay');
+      display.classList.remove('visible');
+      document.querySelectorAll('.supplementary-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      currentUrl = null;
+      useIframe = false;
+    }
+  </script>
+</body>
+</html>

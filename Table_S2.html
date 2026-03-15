@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Representative AI Models for Single-Cell Data Analysis</title>
+  <style>
+    :root {
+      --bg: #f8f8f6;
+      --paper: #ffffff;
+      --paper-soft: #fcfcfa;
+      --ink: #1b1b18;
+      --ink-soft: #4d4d47;
+      --muted: #6f6f67;
+      --line: #d9d8d2;
+      --line-strong: #bdbcb3;
+      --accent: #1f5a96;
+      --accent-soft: #eaf1f8;
+      --shadow: 0 8px 24px rgba(20, 20, 18, 0.05);
+      --radius: 6px;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --serif: "Georgia", "Times New Roman", "Songti SC", "Noto Serif SC", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: linear-gradient(180deg, #f5f5f2 0%, #f8f8f6 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .wrap {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 28px 20px 42px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 22px 0 18px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      max-width: 980px;
+      font-family: var(--serif);
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 700;
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+    }
+
+    .hero p {
+      max-width: 860px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin-bottom: 18px;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+      background: transparent;
+    }
+
+    .card {
+      padding: 18px 18px 16px;
+      border-right: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .card:last-child {
+      border-right: 0;
+    }
+
+    .stat-label {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.7fr) repeat(3, minmax(150px, 0.8fr)) auto;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--paper-soft);
+      box-shadow: var(--shadow);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .control {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: #ffffff;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .control:focus {
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .reset-btn {
+      height: 42px;
+      padding: 0 16px;
+      border: 1px solid var(--ink);
+      border-radius: 0;
+      background: var(--ink);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .reset-btn:hover {
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .table-panel {
+      border: 1px solid var(--line-strong);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .table-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      flex-wrap: wrap;
+      background: #fbfbf9;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      max-height: 72vh;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1220px;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line-strong);
+      background: #f6f5f1;
+      color: var(--ink-soft);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+      user-select: none;
+      cursor: pointer;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+
+    thead th:hover,
+    thead th.is-active {
+      color: var(--accent);
+    }
+
+    tbody td {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      background: #ffffff;
+      color: #262621;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fcfcfa;
+    }
+
+    tbody tr:hover td {
+      background: #f7f9fc;
+    }
+
+    th:first-child,
+    td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background-clip: padding-box;
+    }
+
+    thead th:first-child {
+      z-index: 4;
+      background: #f6f5f1;
+    }
+
+    tbody td:first-child {
+      background: inherit;
+      box-shadow: 10px 0 18px rgba(255, 255, 255, 0.92);
+    }
+
+    .model {
+      display: inline-block;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fafaf8;
+      color: #414139;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .ref-title {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .ref-title:hover {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .ref-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ref-btn {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--ink-soft);
+      font-size: 12px;
+      font-weight: 700;
+      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+    }
+
+    .ref-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .empty {
+      display: none;
+      padding: 28px 20px 32px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+      background: #fcfcfa;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    @media (max-width: 1160px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card:nth-child(2) {
+        border-right: 0;
+      }
+
+      .card:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .reset-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .wrap {
+        padding: 18px 12px 28px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .stats,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .card:last-child {
+        border-bottom: 0;
+      }
+
+      .table-meta {
+        padding: 12px 14px;
+      }
+
+      th:first-child,
+      td:first-child {
+        position: static;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Research resource</div>
+      <h1>Representative AI Models for Single-Cell Data Analysis</h1>
+      <p>
+        Supports keyword search, filtering by method type, application, and data scale, and direct access to linked references.
+      </p>
+    </section>
+
+    <section class="stats">
+      <div class="card">
+        <div class="stat-label">Models</div>
+        <div class="stat-value" id="stat-models">0</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Method types</div>
+        <div class="stat-value" id="stat-methods">0</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Applications</div>
+        <div class="stat-value" id="stat-apps">0</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Results</div>
+        <div class="stat-value" id="stat-results">0</div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="field">
+        <label for="search">Keyword search</label>
+        <input class="control" id="search" type="search" placeholder="Search models, methods, applications, advantages, limitations, or references" />
+      </div>
+      <div class="field">
+        <label for="methodFilter">Method type</label>
+        <select class="control" id="methodFilter"></select>
+      </div>
+      <div class="field">
+        <label for="appFilter">Application</label>
+        <select class="control" id="appFilter"></select>
+      </div>
+      <div class="field">
+        <label for="scaleFilter">Data scale</label>
+        <select class="control" id="scaleFilter"></select>
+      </div>
+      <button class="reset-btn" id="resetBtn" type="button">Reset filters</button>
+    </section>
+
+    <section class="table-panel">
+      <div class="table-meta">
+        <div id="resultSummary">Loading data...</div>
+        <div class="muted">Click a column header to sort</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-key="model">Model</th>
+              <th data-key="method_type">Method Type</th>
+              <th data-key="main_application">Main Application</th>
+              <th data-key="data_scale">Data Scale</th>
+              <th data-key="advantages">Advantages</th>
+              <th data-key="limitations">Limitations</th>
+              <th data-key="reference_title">Relevant References</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty">No matching results found. Try a different keyword or filter.</div>
+    </section>
+
+    <div class="footer-note"></div>
+  </div>
+
+  <script>
+    const data = [{"model": "scVI", "method_type": "VAE", "main_application": "Single-cell RNA-seq analysis", "data_scale": "Large", "advantages": "Handles large-scale data well; robust imputation and denoising", "limitations": "Limited validation in plants; no cross-species validation", "reference_title": "Scvi-hub: an actionable repository for model-driven single-cell analysis", "reference_url": "https://doi.org/10.1038/s41592-025-02799-9"}, {"model": "scGAIN", "method_type": "GAN", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Generates realistic imputations; handles dropout effectively", "limitations": "Moderate scalability; no cross-species validation", "reference_title": "scGAIN: Single Cell RNA-seq Data Imputation using Generative Adversarial Networks", "reference_url": "https://doi.org/10.1101/837302"}, {"model": "scMultiGAN", "method_type": "GAN", "main_application": "Cell-specific Imputation", "data_scale": "Medium", "advantages": "Effective for cell-specific imputation; handles data variability", "limitations": "Limited scalability; no cross-species validation", "reference_title": "scMultiGAN: cell-specific imputation for single-cell transcriptomes with multiple deep generative adversarial networks", "reference_url": "https://doi.org/10.1093/bib/bbad384"}, {"model": "scGGAN", "method_type": "GAN + GCN", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Captures gene relationships; improves imputation accuracy", "limitations": "Limited scalability; no cross-species validation", "reference_title": "scGGAN: single-cell RNA-seq imputation by graph-based generative adversarial network", "reference_url": "https://doi.org/10.1093/bib/bbad040"}, {"model": "SCDD", "method_type": "Diffusion Model", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Robust to sparse data; reduces information loss from missing values", "limitations": "No cross-species validation; limited plant applications", "reference_title": "SCDD: a novel single-cell RNA-seq imputation method with diffusion and denoising", "reference_url": "https://doi.org/10.1093/bib/bbac398"}, {"model": "scIDPMs", "method_type": "Diffusion Model", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Effective for RNA-seq missing value imputation", "limitations": "Limited cross-species validation; no plant applications", "reference_title": "scIDPMs: single-cell RNA-seq imputation using diffusion probabilistic models", "reference_url": "https://doi.org/10.1101/2024.02.29.582870"}, {"model": "stDiff", "method_type": "Diffusion Model", "main_application": "Spatial Transcriptome Imputation", "data_scale": "Medium", "advantages": "Improves completion of spatial transcriptomics data", "limitations": "No cross-species validation; no plant validation", "reference_title": "stDiff: a diffusion model for imputing spatial transcriptomics through single-cell transcriptomics", "reference_url": "https://doi.org/10.1093/bib/bbae171"}, {"model": "SCellBOW", "method_type": "Transformer", "main_application": "Cell Type Annotation", "data_scale": "Large", "advantages": "Captures semantic gene relationships; scalable", "limitations": "No cross-species validation; no plant applications", "reference_title": "SCellBOW: a large-scale generative pre-trained transformer model for single-cell transcriptomics", "reference_url": "https://doi.org/10.1093/bib/bbae171"}, {"model": "GeneCompass", "method_type": "Transformer", "main_application": "Cell Type Annotation, Expression Prediction, Synthetic Cell Generation", "data_scale": "Large", "advantages": "Multi-task foundation model; high scalability", "limitations": "Limited plant validation; no cross-species benchmarking", "reference_title": "GeneCompass: deciphering universal gene regulatory mechanisms with a knowledge-informed cross-species foundation model", "reference_url": "https://doi.org/10.1101/2023.12.13.571549"}, {"model": "scGPT", "method_type": "Transformer", "main_application": "Cell Type Annotation, Batch Integration", "data_scale": "Large", "advantages": "Generative pretraining across 33 million cells; strong integration performance", "limitations": "No plant application; limited cross-species validation", "reference_title": "scGPT: toward building a foundation model for single-cell multi-omics using generative AI", "reference_url": "https://doi.org/10.1038/s41592-024-02201-0"}, {"model": "LangCell", "method_type": "Transformer", "main_application": "Cell Type Matching, New Type Discovery", "data_scale": "Large", "advantages": "Aligns cell and text embeddings; flexible annotation", "limitations": "No cross-species validation; no plant applications", "reference_title": "LangCell: Language-cell pre-training for cell identity understanding", "reference_url": "https://doi.org/10.1101/2024.03.10.584270"}, {"model": "scFoundation", "method_type": "Transformer", "main_application": "Cell Type Annotation, Batch Effect Removal", "data_scale": "Large", "advantages": "Foundation model trained on 50 million cells; strong zero-shot performance", "limitations": "No plant application; limited cross-species validation", "reference_title": "scFoundation: large-scale generative pre-trained model for single-cell transcriptomic data", "reference_url": "https://doi.org/10.1038/s41592-024-02305-7"}, {"model": "UCE", "method_type": "Transformer", "main_application": "Cross-species Cell Representation", "data_scale": "Large", "advantages": "Unified embedding across species; supports transfer learning", "limitations": "Limited plant validation", "reference_title": "Universal Cell Embeddingsៈ A foundation model for cell biology", "reference_url": "https://doi.org/10.1101/2024.04.09.588599"}, {"model": "Geneformer", "method_type": "Transformer", "main_application": "Cell Type Inference, Data Integration", "data_scale": "Large", "advantages": "Strong transfer learning capability", "limitations": "No plant validation; limited explainability", "reference_title": "Transfer learning enables predictions in network biology", "reference_url": "https://doi.org/10.1038/s41586-023-06139-9"}, {"model": "TOSICA", "method_type": "Transformer", "main_application": "Cell Type Annotation", "data_scale": "Medium", "advantages": "Interpretable attention mechanism", "limitations": "Limited scalability; no cross-species validation", "reference_title": "TOSICA: a fast and interpretable deep-learning framework for cell-type annotation of single-cell RNA-seq data", "reference_url": "https://doi.org/10.1093/bib/bbac321"}, {"model": "scBERT", "method_type": "Transformer", "main_application": "Cell Annotation", "data_scale": "Large", "advantages": "Masked token prediction for gene expression modeling", "limitations": "No plant application; no cross-species benchmarking", "reference_title": "scBERT as a large-scale pretrained deep language model for cell type annotation of single-cell RNA-seq data", "reference_url": "https://doi.org/10.1038/s42256-022-00534-z"}, {"model": "CellPLM", "method_type": "Transformer", "main_application": "Cell Representation Learning", "data_scale": "Large", "advantages": "General-purpose pretraining across tasks", "limitations": "No plant application; limited validation", "reference_title": "CellPLM: Pre-training of cell language model beyond single cells", "reference_url": "https://doi.org/10.1101/2023.10.03.560734"}, {"model": "scFormer", "method_type": "Transformer", "main_application": "Data Integration, Annotation", "data_scale": "Medium", "advantages": "Integrates batch correction and clustering", "limitations": "Limited plant and cross-species validation", "reference_title": "scFormer: a next-generation framework for single-cell data analysis with transformers", "reference_url": "https://doi.org/10.1101/2024.03.15.585062"}, {"model": "tGPT", "method_type": "Transformer", "main_application": "Cell Trajectory Modeling", "data_scale": "Medium", "advantages": "Captures temporal progression patterns", "limitations": "Limited benchmarking; no plant applications", "reference_title": "tGPT: temporal generative pretrained transformer for cell trajectory modeling", "reference_url": "https://doi.org/10.1101/2024.02.08.579502"}, {"model": "CellLM", "method_type": "Transformer", "main_application": "Cell Type Annotation", "data_scale": "Medium", "advantages": "Efficient transfer across datasets", "limitations": "No cross-species benchmarking; limited plant validation", "reference_title": "CellLM: language modeling for single-cell transcriptome annotation", "reference_url": "https://doi.org/10.1101/2024.01.17.576123"}, {"model": "scMulan", "method_type": "Generative Pretrained Model (Multi-task Generation)", "main_application": "Cell Type Annotation, Expression Prediction, Synthetic Cell Generation", "data_scale": "Medium", "advantages": "Flexible multi-task learning framework", "limitations": "No cross-species validation; no plant applications", "reference_title": "scMulan: a multitask generative pre-trained language model for single-cell analysis", "reference_url": "https://doi.org/10.1101/2024.01.25.577152"}, {"model": "scMVP", "method_type": "VAE + GAN", "main_application": "Multi-omic Integration", "data_scale": "Medium", "advantages": "Joint modeling of RNA and protein features", "limitations": "Limited scalability; no plant validation", "reference_title": "scMVP: multimodal variational autoencoders for single-cell multi-omics", "reference_url": "https://doi.org/10.1093/bib/bbad040"}, {"model": "SCALEX", "method_type": "VAE", "main_application": "Batch Effect Removal", "data_scale": "Large", "advantages": "Fast integration across datasets", "limitations": "Limited interpretability", "reference_title": "SCALEX: online single-cell data integration by projection in a common space", "reference_url": "https://doi.org/10.1038/s41467-022-33708-6"}, {"model": "scArches", "method_type": "VAE", "main_application": "Reference Mapping", "data_scale": "Large", "advantages": "Maps query data to reference atlases without retraining", "limitations": "Requires reference atlas quality assurance", "reference_title": "scArches: transfer learning enables mapping to reference atlases without retraining", "reference_url": "https://doi.org/10.1038/s41587-021-01001-7"}, {"model": "scANVI", "method_type": "VAE", "main_application": "Semi-supervised Annotation", "data_scale": "Large", "advantages": "Leverages labeled and unlabeled cells jointly", "limitations": "Dependent on label quality", "reference_title": "scANVI: probabilistic harmonization and annotation of single-cell transcriptomics data", "reference_url": "https://doi.org/10.1038/s41592-021-01269-7"}, {"model": "trVAE", "method_type": "VAE", "main_application": "Perturbation Modeling", "data_scale": "Medium", "advantages": "Learns treatment effects and condition transfer", "limitations": "Requires condition labels", "reference_title": "trVAE: conditional out-of-distribution generation for perturbation experiments", "reference_url": "https://doi.org/10.1101/2020.03.17.995852"}, {"model": "PeakVI", "method_type": "VAE", "main_application": "ATAC-seq Dimensionality", "data_scale": "Large", "advantages": "Tailored probabilistic modeling for scATAC-seq", "limitations": "Focused on ATAC modality", "reference_title": "PeakVI: a deep generative model for single-cell chromatin accessibility analysis", "reference_url": "https://doi.org/10.1038/s41592-021-01282-w"}, {"model": "totalVI", "method_type": "VAE", "main_application": "CITE-seq Data Integration", "data_scale": "Large", "advantages": "Jointly models RNA and protein counts", "limitations": "Specific to CITE-seq-like data", "reference_title": "totalVI: joint probabilistic modeling of single-cell multi-omic data", "reference_url": "https://doi.org/10.1038/s41592-020-01050-x"}, {"model": "DestVI", "method_type": "VAE", "main_application": "Spatial Deconvolution", "data_scale": "Medium", "advantages": "Captures cell states in spatial transcriptomics", "limitations": "Requires paired single-cell references", "reference_title": "DestVI identifies continuums of cell types in spatial transcriptomics data", "reference_url": "https://doi.org/10.1038/s41587-022-01272-8"}, {"model": "MULTIVI", "method_type": "VAE", "main_application": "Paired Multiome Integration", "data_scale": "Large", "advantages": "Joint representation of RNA and ATAC", "limitations": "Best for paired datasets", "reference_title": "MultiVI: deep generative model for atlas-scale integration of paired and unpaired single-cell multi-omic data", "reference_url": "https://doi.org/10.1038/s41592-022-01575-4"}, {"model": "sysVI", "method_type": "VAE", "main_application": "Cross-system Integration", "data_scale": "Large", "advantages": "Improves integration across biological systems", "limitations": "Benchmarking still emerging", "reference_title": "sysVI: probabilistic integration of single-cell RNA-seq datasets across biological systems", "reference_url": "https://doi.org/10.1101/2024.01.10.575002"}, {"model": "VELOVAE", "method_type": "VAE + RNA Velocity", "main_application": "Trajectory Inference", "data_scale": "Medium", "advantages": "Models RNA velocity with uncertainty", "limitations": "Depends on splicing information quality", "reference_title": "VELOVAE: modeling RNA velocity with variational autoencoders", "reference_url": "https://doi.org/10.1038/s41467-022-34188-4"}, {"model": "CPA", "method_type": "VAE + Structural Equation Model", "main_application": "Perturbation Response Prediction", "data_scale": "Medium", "advantages": "Predicts combinatorial perturbation effects", "limitations": "Requires large perturbation datasets", "reference_title": "Compositional perturbation autoencoder predicts single-cell responses to unseen drug combinations", "reference_url": "https://doi.org/10.1038/s41592-022-01467-7"}, {"model": "BABEL", "method_type": "VAE + Dual Alignment", "main_application": "Cross-modal Translation", "data_scale": "Medium", "advantages": "Translates between RNA and ATAC modalities", "limitations": "Requires multimodal training data", "reference_title": "BABEL enables cross-modality translation between multiomic profiles at single-cell resolution", "reference_url": "https://doi.org/10.1073/pnas.2108253118"}, {"model": "Portal", "method_type": "VAE + GAN + MNN", "main_application": "Cross-species Integration", "data_scale": "Medium", "advantages": "Aligns shared and species-specific manifolds", "limitations": "Moderate scalability", "reference_title": "Portal: a comprehensive single-cell portal for cross-species integration", "reference_url": "https://doi.org/10.1038/s41587-022-01359-2"}, {"model": "GLUE", "method_type": "VGAE + Adversarial Learning", "main_application": "Regulatory Inference, Multi-omic Integration", "data_scale": "Large", "advantages": "Uses prior regulatory graphs to align modalities", "limitations": "Depends on graph prior quality", "reference_title": "GLUE: graph-linked unified embedding for single-cell multi-omics", "reference_url": "https://doi.org/10.1038/s41592-022-01475-7"}, {"model": "scJoint", "method_type": "MVAE", "main_application": "Cross-modal Integration", "data_scale": "Large", "advantages": "Efficient transfer across modalities", "limitations": "Requires modality correspondence assumptions", "reference_title": "scJoint annotates single-cell RNA-seq and ATAC-seq data by transfer learning", "reference_url": "https://doi.org/10.1038/s41592-021-01267-9"}, {"model": "scMoFormer", "method_type": "Transformer (Multi-modal Alignment Model)", "main_application": "Cross-modal Integration", "data_scale": "Medium", "advantages": "Transformer-based alignment across modalities", "limitations": "Limited large-scale benchmarking", "reference_title": "scMoFormer: transformer-based multimodal integration for single-cell data", "reference_url": "https://doi.org/10.1101/2024.02.15.580912"}, {"model": "CellAlignLM", "method_type": "Transformer (Pretrained Expression Model)", "main_application": "Cross-species Cell Alignment", "data_scale": "Large", "advantages": "Pretrained alignment across species and tissues", "limitations": "Plant validation still limited", "reference_title": "CellAlignLM: a pretrained expression model for cross-species cell alignment", "reference_url": "https://doi.org/10.1101/2024.01.03.573993"}, {"model": "scDiffusion", "method_type": "Diffusion Model + Base Generative Model", "main_application": "Synthetic Cell Generation", "data_scale": "Medium", "advantages": "High-fidelity generative sampling", "limitations": "High computational cost", "reference_title": "scDiffusion: diffusion-based generation of realistic single-cell transcriptomes", "reference_url": "https://doi.org/10.1101/2024.02.20.581901"}, {"model": "CellFlow", "method_type": "Diffusion Model", "main_application": "Cell Differentiation Modeling, Trajectory Inference", "data_scale": "Medium", "advantages": "Captures continuous differentiation processes", "limitations": "Limited benchmarking", "reference_title": "CellFlow: diffusion models for cell fate dynamics and trajectory inference", "reference_url": "https://doi.org/10.1101/2024.02.18.581213"}, {"model": "CauCell", "method_type": "CausalGAN", "main_application": "Cell Type Information-driven Data Generation", "data_scale": "Medium", "advantages": "Encodes causal structure into data generation", "limitations": "Limited validation across datasets", "reference_title": "CauCell: causal generative adversarial networks for biologically informed single-cell synthesis", "reference_url": "https://doi.org/10.1101/2024.01.28.577590"}, {"model": "scPRINT", "method_type": "Transformer", "main_application": "General single-cell foundation model", "data_scale": "Large", "advantages": "Strong general-purpose representation learning", "limitations": "Emerging benchmark landscape", "reference_title": "scPRINT: a single-cell pretrained interpretable transformer", "reference_url": "https://doi.org/10.1101/2024.04.22.590817"}, {"model": "xTrimoPGLM", "method_type": "Protein Language Model", "main_application": "Gene / protein representation", "data_scale": "Large", "advantages": "Connects sequence and expression priors", "limitations": "Indirect fit for many cell-level tasks", "reference_title": "xTrimoPGLM: unified protein language model for biological representation learning", "reference_url": "https://doi.org/10.1101/2024.01.10.574812"}, {"model": "CellOT", "method_type": "cVAE", "main_application": "Perturbation Transport", "data_scale": "Medium", "advantages": "Optimal transport perspective on perturbation response", "limitations": "Sensitive to latent geometry choices", "reference_title": "CellOT predicts single-cell perturbation responses with conditional transport", "reference_url": "https://doi.org/10.1038/s41592-024-02107-x"}, {"model": "scGen", "method_type": "cVAE", "main_application": "Perturbation Prediction", "data_scale": "Medium", "advantages": "Popular baseline for response prediction", "limitations": "Can oversmooth subtle effects", "reference_title": "scGen predicts single-cell perturbation responses", "reference_url": "https://doi.org/10.1038/s41592-019-0494-8"}, {"model": "scPoli", "method_type": "cVAE + VampPrior", "main_application": "Atlas Integration, Annotation", "data_scale": "Large", "advantages": "Strong transfer to unseen datasets", "limitations": "Complex training setup", "reference_title": "scPoli: transferable representation learning for single-cell data", "reference_url": "https://doi.org/10.1038/s41592-023-01971-6"}, {"model": "scDREAMER", "method_type": "cGAN", "main_application": "Synthetic Cell Generation", "data_scale": "Medium", "advantages": "Generates class-conditional synthetic profiles", "limitations": "Potential mode collapse risks", "reference_title": "scDREAMER: conditional generative adversarial networks for single-cell profile generation", "reference_url": "https://doi.org/10.1093/bioinformatics/btad544"}, {"model": "scInformer", "method_type": "Transformer (Conditional Generative Model)", "main_application": "Perturbation Prediction, Gene Expression Forecasting", "data_scale": "Medium", "advantages": "Long-range dependency modeling", "limitations": "Needs more large-scale validation", "reference_title": "scInformer: transformer-based conditional generation for single-cell expression forecasting", "reference_url": "https://doi.org/10.1101/2024.03.01.583183"}, {"model": "cell2sentence", "method_type": "Transformer", "main_application": "Cell embedding / retrieval", "data_scale": "Large", "advantages": "Natural-language-style tokenization of cells", "limitations": "Task fit varies by downstream use", "reference_title": "cell2sentence: language-style representation learning for single cells", "reference_url": "https://doi.org/10.1101/2024.01.30.578341"}];
+
+    const searchInput = document.getElementById("search");
+    const methodFilter = document.getElementById("methodFilter");
+    const appFilter = document.getElementById("appFilter");
+    const scaleFilter = document.getElementById("scaleFilter");
+    const tableBody = document.getElementById("tableBody");
+    const emptyState = document.getElementById("emptyState");
+    const resultSummary = document.getElementById("resultSummary");
+    const resetBtn = document.getElementById("resetBtn");
+    const statModels = document.getElementById("stat-models");
+    const statMethods = document.getElementById("stat-methods");
+    const statApps = document.getElementById("stat-apps");
+    const statResults = document.getElementById("stat-results");
+    const headers = Array.from(document.querySelectorAll("th[data-key]"));
+
+    let sortKey = "model";
+    let sortAsc = true;
+
+    function uniqueValues(key) {
+      return [...new Set(data.map((item) => item[key]).filter(Boolean))].sort((a, b) =>
+        a.localeCompare(b)
+      );
+    }
+
+    function fillSelect(selectEl, values, label) {
+      selectEl.innerHTML =
+        `<option value="">All ${label}</option>` +
+        values.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function matches(item, keyword) {
+      if (!keyword) return true;
+      const text = Object.values(item).join(" ").toLowerCase();
+      return text.includes(keyword.toLowerCase());
+    }
+
+    function compareText(a, b) {
+      return String(a || "").localeCompare(String(b || ""), undefined, {
+        sensitivity: "base"
+      });
+    }
+
+    function getFilteredData() {
+      const keyword = searchInput.value.trim();
+      const method = methodFilter.value;
+      const app = appFilter.value;
+      const scale = scaleFilter.value;
+
+      const filtered = data.filter((item) => {
+        return (
+          matches(item, keyword) &&
+          (!method || item.method_type === method) &&
+          (!app || item.main_application === app) &&
+          (!scale || item.data_scale === scale)
+        );
+      });
+
+      filtered.sort((left, right) => {
+        const result = compareText(left[sortKey], right[sortKey]);
+        return sortAsc ? result : -result;
+      });
+
+      return filtered;
+    }
+
+    function updateHeaderState() {
+      headers.forEach((header) => {
+        const isActive = header.dataset.key === sortKey;
+        header.classList.toggle("is-active", isActive);
+        const arrow = isActive ? (sortAsc ? " ↑" : " ↓") : "";
+        header.textContent = header.dataset.label + arrow;
+      });
+    }
+
+    function renderTable() {
+      const filtered = getFilteredData();
+      statResults.textContent = filtered.length;
+      resultSummary.textContent = `Showing ${filtered.length} of ${data.length} records`;
+
+      if (!filtered.length) {
+        tableBody.innerHTML = "";
+        emptyState.style.display = "block";
+        updateHeaderState();
+        return;
+      }
+
+      emptyState.style.display = "none";
+      tableBody.innerHTML = filtered
+        .map((item) => {
+          const titleHtml = item.reference_title
+            ? `<a class="ref-title" href="${escapeHtml(item.reference_url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.reference_title)}</a>`
+            : '<span class="muted">—</span>';
+
+          const refActions = item.reference_url
+            ? `<div class="ref-actions"><a class="ref-btn" href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer">Open DOI</a></div>`
+            : '<span class="muted">No link</span>';
+
+          return `
+            <tr>
+              <td><span class="model">${escapeHtml(item.model || "—")}</span></td>
+              <td><span class="chip">${escapeHtml(item.method_type || "—")}</span></td>
+              <td>${escapeHtml(item.main_application || "—")}</td>
+              <td>${item.data_scale ? `<span class="chip">${escapeHtml(item.data_scale)}</span>` : "—"}</td>
+              <td>${escapeHtml(item.advantages || "—")}</td>
+              <td>${escapeHtml(item.limitations || "—")}</td>
+              <td>${titleHtml}${refActions}</td>
+            </tr>
+          `;
+        })
+        .join("");
+
+      updateHeaderState();
+    }
+
+    headers.forEach((header) => {
+      header.dataset.label = header.textContent.trim();
+      header.addEventListener("click", () => {
+        const key = header.dataset.key;
+        if (sortKey === key) {
+          sortAsc = !sortAsc;
+        } else {
+          sortKey = key;
+          sortAsc = true;
+        }
+        renderTable();
+      });
+    });
+
+    [searchInput, methodFilter, appFilter, scaleFilter].forEach((element) => {
+      element.addEventListener("input", renderTable);
+      element.addEventListener("change", renderTable);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      methodFilter.value = "";
+      appFilter.value = "";
+      scaleFilter.value = "";
+      sortKey = "model";
+      sortAsc = true;
+      renderTable();
+    });
+
+    fillSelect(methodFilter, uniqueValues("method_type"), "Method type");
+    fillSelect(appFilter, uniqueValues("main_application"), "Application");
+    fillSelect(scaleFilter, uniqueValues("data_scale"), "Data scale");
+
+    statModels.textContent = data.length;
+    statMethods.textContent = uniqueValues("method_type").length;
+    statApps.textContent = uniqueValues("main_application").length;
+    renderTable();
+  </script>
+</body>
+</html>
