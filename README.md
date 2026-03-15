@@ -1,1 +1,2 @@
 # crop_singlecell_ai
+This repository compiles representative resources in crop single-cell biology, including: (1) landmark plant single-cell studies profiling cell atlases across major crops; and (2) state-of-the-art AI models and computational tools for single-cell RNA-seq data analysis, integration, annotation, and trajectory inference. Designed to facilitate research at the intersection of plant biology and artificial intelligence.
