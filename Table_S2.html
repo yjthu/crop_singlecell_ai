@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Representative AI Models for Single-Cell Data Analysis</title>
+  <title>Representative AI Models in Single-Cell Analysis</title>
   <style>
     :root {
       --bg: #f8f8f6;
@@ -17,18 +18,13 @@
       --accent: #1f5a96;
       --accent-soft: #eaf1f8;
       --shadow: 0 8px 24px rgba(20, 20, 18, 0.05);
-      --radius: 6px;
-      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      --serif: "Georgia", "Times New Roman", "Songti SC", "Noto Serif SC", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --serif: "Georgia", "Times New Roman", serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -43,14 +39,10 @@
       text-decoration: none;
     }
 
-    button,
-    input,
-    select {
-      font: inherit;
-    }
+    button, input, select { font: inherit; }
 
     .wrap {
-      max-width: 1380px;
+      max-width: 1460px;
       margin: 0 auto;
       padding: 28px 20px 42px;
     }
@@ -81,11 +73,11 @@
     }
 
     .hero p {
-      max-width: 860px;
+      max-width: 900px;
       margin: 0;
       color: var(--ink-soft);
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.72;
     }
 
     .stats {
@@ -95,18 +87,14 @@
       margin-bottom: 18px;
       border-top: 1px solid var(--line-strong);
       border-bottom: 1px solid var(--line-strong);
-      background: transparent;
     }
 
     .card {
       padding: 18px 18px 16px;
       border-right: 1px solid var(--line);
-      background: transparent;
     }
 
-    .card:last-child {
-      border-right: 0;
-    }
+    .card:last-child { border-right: 0; }
 
     .stat-label {
       margin-bottom: 8px;
@@ -126,7 +114,7 @@
 
     .toolbar {
       display: grid;
-      grid-template-columns: minmax(280px, 1.7fr) repeat(3, minmax(150px, 0.8fr)) auto;
+      grid-template-columns: minmax(280px, 1.6fr) repeat(3, minmax(150px, 0.8fr)) auto;
       gap: 12px;
       align-items: end;
       margin-bottom: 16px;
@@ -212,7 +200,7 @@
 
     table {
       width: 100%;
-      min-width: 1220px;
+      min-width: 1420px;
       border-collapse: collapse;
     }
 
@@ -247,7 +235,7 @@
       background: #ffffff;
       color: #262621;
       font-size: 14px;
-      line-height: 1.65;
+      line-height: 1.62;
     }
 
     tbody tr:nth-child(even) td {
@@ -280,6 +268,7 @@
       display: inline-block;
       font-weight: 700;
       letter-spacing: -0.01em;
+      white-space: nowrap;
     }
 
     .chip {
@@ -292,28 +281,29 @@
       font-size: 12px;
       font-weight: 600;
       line-height: 1.45;
+      white-space: nowrap;
     }
 
-    .ref-title {
+    .title-link {
       display: inline-block;
-      margin-bottom: 8px;
       color: var(--accent);
       font-weight: 700;
       line-height: 1.5;
+      margin-bottom: 8px;
     }
 
-    .ref-title:hover {
+    .title-link:hover {
       text-decoration: underline;
       text-underline-offset: 2px;
     }
 
-    .ref-actions {
+    .link-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
 
-    .ref-btn {
+    .link-btn {
       display: inline-flex;
       align-items: center;
       min-height: 28px;
@@ -327,15 +317,13 @@
       transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
     }
 
-    .ref-btn:hover {
+    .link-btn:hover {
       border-color: var(--accent);
       color: var(--accent);
       background: var(--accent-soft);
     }
 
-    .muted {
-      color: var(--muted);
-    }
+    .muted { color: var(--muted); }
 
     .empty {
       display: none;
@@ -347,14 +335,7 @@
       background: #fcfcfa;
     }
 
-    .footer-note {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: right;
-    }
-
-    @media (max-width: 1160px) {
+    @media (max-width: 1180px) {
       .stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -415,9 +396,9 @@
   <div class="wrap">
     <section class="hero">
       <div class="eyebrow">Research resource</div>
-      <h1>Representative AI Models for Single-Cell Data Analysis</h1>
+      <h1>Representative AI Models in Single-Cell Analysis</h1>
       <p>
-        Supports keyword search, filtering by method type, application, and data scale, and direct access to linked references.
+        An interactive journal-style table for comparing representative AI models used in single-cell data analysis, with searchable content, structured filters, and direct access to linked references.
       </p>
     </section>
 
@@ -427,7 +408,7 @@
         <div class="stat-value" id="stat-models">0</div>
       </div>
       <div class="card">
-        <div class="stat-label">Method types</div>
+        <div class="stat-label">Method Types</div>
         <div class="stat-value" id="stat-methods">0</div>
       </div>
       <div class="card">
@@ -435,18 +416,18 @@
         <div class="stat-value" id="stat-apps">0</div>
       </div>
       <div class="card">
-        <div class="stat-label">Results</div>
+        <div class="stat-label">Visible Results</div>
         <div class="stat-value" id="stat-results">0</div>
       </div>
     </section>
 
     <section class="toolbar">
       <div class="field">
-        <label for="search">Keyword search</label>
+        <label for="search">Keyword Search</label>
         <input class="control" id="search" type="search" placeholder="Search models, methods, applications, advantages, limitations, or references" />
       </div>
       <div class="field">
-        <label for="methodFilter">Method type</label>
+        <label for="methodFilter">Method Type</label>
         <select class="control" id="methodFilter"></select>
       </div>
       <div class="field">
@@ -454,10 +435,10 @@
         <select class="control" id="appFilter"></select>
       </div>
       <div class="field">
-        <label for="scaleFilter">Data scale</label>
+        <label for="scaleFilter">Data Scale</label>
         <select class="control" id="scaleFilter"></select>
       </div>
-      <button class="reset-btn" id="resetBtn" type="button">Reset filters</button>
+      <button class="reset-btn" id="resetBtn" type="button">Reset Filters</button>
     </section>
 
     <section class="table-panel">
@@ -469,13 +450,14 @@
         <table>
           <thead>
             <tr>
-              <th data-key="model">Model</th>
-              <th data-key="method_type">Method Type</th>
-              <th data-key="main_application">Main Application</th>
-              <th data-key="data_scale">Data Scale</th>
-              <th data-key="advantages">Advantages</th>
-              <th data-key="limitations">Limitations</th>
-              <th data-key="reference_title">Relevant References</th>
+              <th data-key="Model">Model</th>
+              <th data-key="Method Type">Method Type</th>
+              <th data-key="Main Application">Main Application</th>
+              <th data-key="Data Scale">Data Scale</th>
+              <th data-key="Advantages">Advantages</th>
+              <th data-key="Limitations">Limitations</th>
+              <th data-key="Relevant references">Relevant References</th>
+              <th data-key="Reference Link">Reference Link</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -483,12 +465,10 @@
       </div>
       <div id="emptyState" class="empty">No matching results found. Try a different keyword or filter.</div>
     </section>
-
-    <div class="footer-note"></div>
   </div>
 
   <script>
-    const data = [{"model": "scVI", "method_type": "VAE", "main_application": "Single-cell RNA-seq analysis", "data_scale": "Large", "advantages": "Handles large-scale data well; robust imputation and denoising", "limitations": "Limited validation in plants; no cross-species validation", "reference_title": "Scvi-hub: an actionable repository for model-driven single-cell analysis", "reference_url": "https://doi.org/10.1038/s41592-025-02799-9"}, {"model": "scGAIN", "method_type": "GAN", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Generates realistic imputations; handles dropout effectively", "limitations": "Moderate scalability; no cross-species validation", "reference_title": "scGAIN: Single Cell RNA-seq Data Imputation using Generative Adversarial Networks", "reference_url": "https://doi.org/10.1101/837302"}, {"model": "scMultiGAN", "method_type": "GAN", "main_application": "Cell-specific Imputation", "data_scale": "Medium", "advantages": "Effective for cell-specific imputation; handles data variability", "limitations": "Limited scalability; no cross-species validation", "reference_title": "scMultiGAN: cell-specific imputation for single-cell transcriptomes with multiple deep generative adversarial networks", "reference_url": "https://doi.org/10.1093/bib/bbad384"}, {"model": "scGGAN", "method_type": "GAN + GCN", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Captures gene relationships; improves imputation accuracy", "limitations": "Limited scalability; no cross-species validation", "reference_title": "scGGAN: single-cell RNA-seq imputation by graph-based generative adversarial network", "reference_url": "https://doi.org/10.1093/bib/bbad040"}, {"model": "SCDD", "method_type": "Diffusion Model", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Robust to sparse data; reduces information loss from missing values", "limitations": "No cross-species validation; limited plant applications", "reference_title": "SCDD: a novel single-cell RNA-seq imputation method with diffusion and denoising", "reference_url": "https://doi.org/10.1093/bib/bbac398"}, {"model": "scIDPMs", "method_type": "Diffusion Model", "main_application": "Data Imputation", "data_scale": "Medium", "advantages": "Effective for RNA-seq missing value imputation", "limitations": "Limited cross-species validation; no plant applications", "reference_title": "scIDPMs: single-cell RNA-seq imputation using diffusion probabilistic models", "reference_url": "https://doi.org/10.1101/2024.02.29.582870"}, {"model": "stDiff", "method_type": "Diffusion Model", "main_application": "Spatial Transcriptome Imputation", "data_scale": "Medium", "advantages": "Improves completion of spatial transcriptomics data", "limitations": "No cross-species validation; no plant validation", "reference_title": "stDiff: a diffusion model for imputing spatial transcriptomics through single-cell transcriptomics", "reference_url": "https://doi.org/10.1093/bib/bbae171"}, {"model": "SCellBOW", "method_type": "Transformer", "main_application": "Cell Type Annotation", "data_scale": "Large", "advantages": "Captures semantic gene relationships; scalable", "limitations": "No cross-species validation; no plant applications", "reference_title": "SCellBOW: a large-scale generative pre-trained transformer model for single-cell transcriptomics", "reference_url": "https://doi.org/10.1093/bib/bbae171"}, {"model": "GeneCompass", "method_type": "Transformer", "main_application": "Cell Type Annotation, Expression Prediction, Synthetic Cell Generation", "data_scale": "Large", "advantages": "Multi-task foundation model; high scalability", "limitations": "Limited plant validation; no cross-species benchmarking", "reference_title": "GeneCompass: deciphering universal gene regulatory mechanisms with a knowledge-informed cross-species foundation model", "reference_url": "https://doi.org/10.1101/2023.12.13.571549"}, {"model": "scGPT", "method_type": "Transformer", "main_application": "Cell Type Annotation, Batch Integration", "data_scale": "Large", "advantages": "Generative pretraining across 33 million cells; strong integration performance", "limitations": "No plant application; limited cross-species validation", "reference_title": "scGPT: toward building a foundation model for single-cell multi-omics using generative AI", "reference_url": "https://doi.org/10.1038/s41592-024-02201-0"}, {"model": "LangCell", "method_type": "Transformer", "main_application": "Cell Type Matching, New Type Discovery", "data_scale": "Large", "advantages": "Aligns cell and text embeddings; flexible annotation", "limitations": "No cross-species validation; no plant applications", "reference_title": "LangCell: Language-cell pre-training for cell identity understanding", "reference_url": "https://doi.org/10.1101/2024.03.10.584270"}, {"model": "scFoundation", "method_type": "Transformer", "main_application": "Cell Type Annotation, Batch Effect Removal", "data_scale": "Large", "advantages": "Foundation model trained on 50 million cells; strong zero-shot performance", "limitations": "No plant application; limited cross-species validation", "reference_title": "scFoundation: large-scale generative pre-trained model for single-cell transcriptomic data", "reference_url": "https://doi.org/10.1038/s41592-024-02305-7"}, {"model": "UCE", "method_type": "Transformer", "main_application": "Cross-species Cell Representation", "data_scale": "Large", "advantages": "Unified embedding across species; supports transfer learning", "limitations": "Limited plant validation", "reference_title": "Universal Cell Embeddingsៈ A foundation model for cell biology", "reference_url": "https://doi.org/10.1101/2024.04.09.588599"}, {"model": "Geneformer", "method_type": "Transformer", "main_application": "Cell Type Inference, Data Integration", "data_scale": "Large", "advantages": "Strong transfer learning capability", "limitations": "No plant validation; limited explainability", "reference_title": "Transfer learning enables predictions in network biology", "reference_url": "https://doi.org/10.1038/s41586-023-06139-9"}, {"model": "TOSICA", "method_type": "Transformer", "main_application": "Cell Type Annotation", "data_scale": "Medium", "advantages": "Interpretable attention mechanism", "limitations": "Limited scalability; no cross-species validation", "reference_title": "TOSICA: a fast and interpretable deep-learning framework for cell-type annotation of single-cell RNA-seq data", "reference_url": "https://doi.org/10.1093/bib/bbac321"}, {"model": "scBERT", "method_type": "Transformer", "main_application": "Cell Annotation", "data_scale": "Large", "advantages": "Masked token prediction for gene expression modeling", "limitations": "No plant application; no cross-species benchmarking", "reference_title": "scBERT as a large-scale pretrained deep language model for cell type annotation of single-cell RNA-seq data", "reference_url": "https://doi.org/10.1038/s42256-022-00534-z"}, {"model": "CellPLM", "method_type": "Transformer", "main_application": "Cell Representation Learning", "data_scale": "Large", "advantages": "General-purpose pretraining across tasks", "limitations": "No plant application; limited validation", "reference_title": "CellPLM: Pre-training of cell language model beyond single cells", "reference_url": "https://doi.org/10.1101/2023.10.03.560734"}, {"model": "scFormer", "method_type": "Transformer", "main_application": "Data Integration, Annotation", "data_scale": "Medium", "advantages": "Integrates batch correction and clustering", "limitations": "Limited plant and cross-species validation", "reference_title": "scFormer: a next-generation framework for single-cell data analysis with transformers", "reference_url": "https://doi.org/10.1101/2024.03.15.585062"}, {"model": "tGPT", "method_type": "Transformer", "main_application": "Cell Trajectory Modeling", "data_scale": "Medium", "advantages": "Captures temporal progression patterns", "limitations": "Limited benchmarking; no plant applications", "reference_title": "tGPT: temporal generative pretrained transformer for cell trajectory modeling", "reference_url": "https://doi.org/10.1101/2024.02.08.579502"}, {"model": "CellLM", "method_type": "Transformer", "main_application": "Cell Type Annotation", "data_scale": "Medium", "advantages": "Efficient transfer across datasets", "limitations": "No cross-species benchmarking; limited plant validation", "reference_title": "CellLM: language modeling for single-cell transcriptome annotation", "reference_url": "https://doi.org/10.1101/2024.01.17.576123"}, {"model": "scMulan", "method_type": "Generative Pretrained Model (Multi-task Generation)", "main_application": "Cell Type Annotation, Expression Prediction, Synthetic Cell Generation", "data_scale": "Medium", "advantages": "Flexible multi-task learning framework", "limitations": "No cross-species validation; no plant applications", "reference_title": "scMulan: a multitask generative pre-trained language model for single-cell analysis", "reference_url": "https://doi.org/10.1101/2024.01.25.577152"}, {"model": "scMVP", "method_type": "VAE + GAN", "main_application": "Multi-omic Integration", "data_scale": "Medium", "advantages": "Joint modeling of RNA and protein features", "limitations": "Limited scalability; no plant validation", "reference_title": "scMVP: multimodal variational autoencoders for single-cell multi-omics", "reference_url": "https://doi.org/10.1093/bib/bbad040"}, {"model": "SCALEX", "method_type": "VAE", "main_application": "Batch Effect Removal", "data_scale": "Large", "advantages": "Fast integration across datasets", "limitations": "Limited interpretability", "reference_title": "SCALEX: online single-cell data integration by projection in a common space", "reference_url": "https://doi.org/10.1038/s41467-022-33708-6"}, {"model": "scArches", "method_type": "VAE", "main_application": "Reference Mapping", "data_scale": "Large", "advantages": "Maps query data to reference atlases without retraining", "limitations": "Requires reference atlas quality assurance", "reference_title": "scArches: transfer learning enables mapping to reference atlases without retraining", "reference_url": "https://doi.org/10.1038/s41587-021-01001-7"}, {"model": "scANVI", "method_type": "VAE", "main_application": "Semi-supervised Annotation", "data_scale": "Large", "advantages": "Leverages labeled and unlabeled cells jointly", "limitations": "Dependent on label quality", "reference_title": "scANVI: probabilistic harmonization and annotation of single-cell transcriptomics data", "reference_url": "https://doi.org/10.1038/s41592-021-01269-7"}, {"model": "trVAE", "method_type": "VAE", "main_application": "Perturbation Modeling", "data_scale": "Medium", "advantages": "Learns treatment effects and condition transfer", "limitations": "Requires condition labels", "reference_title": "trVAE: conditional out-of-distribution generation for perturbation experiments", "reference_url": "https://doi.org/10.1101/2020.03.17.995852"}, {"model": "PeakVI", "method_type": "VAE", "main_application": "ATAC-seq Dimensionality", "data_scale": "Large", "advantages": "Tailored probabilistic modeling for scATAC-seq", "limitations": "Focused on ATAC modality", "reference_title": "PeakVI: a deep generative model for single-cell chromatin accessibility analysis", "reference_url": "https://doi.org/10.1038/s41592-021-01282-w"}, {"model": "totalVI", "method_type": "VAE", "main_application": "CITE-seq Data Integration", "data_scale": "Large", "advantages": "Jointly models RNA and protein counts", "limitations": "Specific to CITE-seq-like data", "reference_title": "totalVI: joint probabilistic modeling of single-cell multi-omic data", "reference_url": "https://doi.org/10.1038/s41592-020-01050-x"}, {"model": "DestVI", "method_type": "VAE", "main_application": "Spatial Deconvolution", "data_scale": "Medium", "advantages": "Captures cell states in spatial transcriptomics", "limitations": "Requires paired single-cell references", "reference_title": "DestVI identifies continuums of cell types in spatial transcriptomics data", "reference_url": "https://doi.org/10.1038/s41587-022-01272-8"}, {"model": "MULTIVI", "method_type": "VAE", "main_application": "Paired Multiome Integration", "data_scale": "Large", "advantages": "Joint representation of RNA and ATAC", "limitations": "Best for paired datasets", "reference_title": "MultiVI: deep generative model for atlas-scale integration of paired and unpaired single-cell multi-omic data", "reference_url": "https://doi.org/10.1038/s41592-022-01575-4"}, {"model": "sysVI", "method_type": "VAE", "main_application": "Cross-system Integration", "data_scale": "Large", "advantages": "Improves integration across biological systems", "limitations": "Benchmarking still emerging", "reference_title": "sysVI: probabilistic integration of single-cell RNA-seq datasets across biological systems", "reference_url": "https://doi.org/10.1101/2024.01.10.575002"}, {"model": "VELOVAE", "method_type": "VAE + RNA Velocity", "main_application": "Trajectory Inference", "data_scale": "Medium", "advantages": "Models RNA velocity with uncertainty", "limitations": "Depends on splicing information quality", "reference_title": "VELOVAE: modeling RNA velocity with variational autoencoders", "reference_url": "https://doi.org/10.1038/s41467-022-34188-4"}, {"model": "CPA", "method_type": "VAE + Structural Equation Model", "main_application": "Perturbation Response Prediction", "data_scale": "Medium", "advantages": "Predicts combinatorial perturbation effects", "limitations": "Requires large perturbation datasets", "reference_title": "Compositional perturbation autoencoder predicts single-cell responses to unseen drug combinations", "reference_url": "https://doi.org/10.1038/s41592-022-01467-7"}, {"model": "BABEL", "method_type": "VAE + Dual Alignment", "main_application": "Cross-modal Translation", "data_scale": "Medium", "advantages": "Translates between RNA and ATAC modalities", "limitations": "Requires multimodal training data", "reference_title": "BABEL enables cross-modality translation between multiomic profiles at single-cell resolution", "reference_url": "https://doi.org/10.1073/pnas.2108253118"}, {"model": "Portal", "method_type": "VAE + GAN + MNN", "main_application": "Cross-species Integration", "data_scale": "Medium", "advantages": "Aligns shared and species-specific manifolds", "limitations": "Moderate scalability", "reference_title": "Portal: a comprehensive single-cell portal for cross-species integration", "reference_url": "https://doi.org/10.1038/s41587-022-01359-2"}, {"model": "GLUE", "method_type": "VGAE + Adversarial Learning", "main_application": "Regulatory Inference, Multi-omic Integration", "data_scale": "Large", "advantages": "Uses prior regulatory graphs to align modalities", "limitations": "Depends on graph prior quality", "reference_title": "GLUE: graph-linked unified embedding for single-cell multi-omics", "reference_url": "https://doi.org/10.1038/s41592-022-01475-7"}, {"model": "scJoint", "method_type": "MVAE", "main_application": "Cross-modal Integration", "data_scale": "Large", "advantages": "Efficient transfer across modalities", "limitations": "Requires modality correspondence assumptions", "reference_title": "scJoint annotates single-cell RNA-seq and ATAC-seq data by transfer learning", "reference_url": "https://doi.org/10.1038/s41592-021-01267-9"}, {"model": "scMoFormer", "method_type": "Transformer (Multi-modal Alignment Model)", "main_application": "Cross-modal Integration", "data_scale": "Medium", "advantages": "Transformer-based alignment across modalities", "limitations": "Limited large-scale benchmarking", "reference_title": "scMoFormer: transformer-based multimodal integration for single-cell data", "reference_url": "https://doi.org/10.1101/2024.02.15.580912"}, {"model": "CellAlignLM", "method_type": "Transformer (Pretrained Expression Model)", "main_application": "Cross-species Cell Alignment", "data_scale": "Large", "advantages": "Pretrained alignment across species and tissues", "limitations": "Plant validation still limited", "reference_title": "CellAlignLM: a pretrained expression model for cross-species cell alignment", "reference_url": "https://doi.org/10.1101/2024.01.03.573993"}, {"model": "scDiffusion", "method_type": "Diffusion Model + Base Generative Model", "main_application": "Synthetic Cell Generation", "data_scale": "Medium", "advantages": "High-fidelity generative sampling", "limitations": "High computational cost", "reference_title": "scDiffusion: diffusion-based generation of realistic single-cell transcriptomes", "reference_url": "https://doi.org/10.1101/2024.02.20.581901"}, {"model": "CellFlow", "method_type": "Diffusion Model", "main_application": "Cell Differentiation Modeling, Trajectory Inference", "data_scale": "Medium", "advantages": "Captures continuous differentiation processes", "limitations": "Limited benchmarking", "reference_title": "CellFlow: diffusion models for cell fate dynamics and trajectory inference", "reference_url": "https://doi.org/10.1101/2024.02.18.581213"}, {"model": "CauCell", "method_type": "CausalGAN", "main_application": "Cell Type Information-driven Data Generation", "data_scale": "Medium", "advantages": "Encodes causal structure into data generation", "limitations": "Limited validation across datasets", "reference_title": "CauCell: causal generative adversarial networks for biologically informed single-cell synthesis", "reference_url": "https://doi.org/10.1101/2024.01.28.577590"}, {"model": "scPRINT", "method_type": "Transformer", "main_application": "General single-cell foundation model", "data_scale": "Large", "advantages": "Strong general-purpose representation learning", "limitations": "Emerging benchmark landscape", "reference_title": "scPRINT: a single-cell pretrained interpretable transformer", "reference_url": "https://doi.org/10.1101/2024.04.22.590817"}, {"model": "xTrimoPGLM", "method_type": "Protein Language Model", "main_application": "Gene / protein representation", "data_scale": "Large", "advantages": "Connects sequence and expression priors", "limitations": "Indirect fit for many cell-level tasks", "reference_title": "xTrimoPGLM: unified protein language model for biological representation learning", "reference_url": "https://doi.org/10.1101/2024.01.10.574812"}, {"model": "CellOT", "method_type": "cVAE", "main_application": "Perturbation Transport", "data_scale": "Medium", "advantages": "Optimal transport perspective on perturbation response", "limitations": "Sensitive to latent geometry choices", "reference_title": "CellOT predicts single-cell perturbation responses with conditional transport", "reference_url": "https://doi.org/10.1038/s41592-024-02107-x"}, {"model": "scGen", "method_type": "cVAE", "main_application": "Perturbation Prediction", "data_scale": "Medium", "advantages": "Popular baseline for response prediction", "limitations": "Can oversmooth subtle effects", "reference_title": "scGen predicts single-cell perturbation responses", "reference_url": "https://doi.org/10.1038/s41592-019-0494-8"}, {"model": "scPoli", "method_type": "cVAE + VampPrior", "main_application": "Atlas Integration, Annotation", "data_scale": "Large", "advantages": "Strong transfer to unseen datasets", "limitations": "Complex training setup", "reference_title": "scPoli: transferable representation learning for single-cell data", "reference_url": "https://doi.org/10.1038/s41592-023-01971-6"}, {"model": "scDREAMER", "method_type": "cGAN", "main_application": "Synthetic Cell Generation", "data_scale": "Medium", "advantages": "Generates class-conditional synthetic profiles", "limitations": "Potential mode collapse risks", "reference_title": "scDREAMER: conditional generative adversarial networks for single-cell profile generation", "reference_url": "https://doi.org/10.1093/bioinformatics/btad544"}, {"model": "scInformer", "method_type": "Transformer (Conditional Generative Model)", "main_application": "Perturbation Prediction, Gene Expression Forecasting", "data_scale": "Medium", "advantages": "Long-range dependency modeling", "limitations": "Needs more large-scale validation", "reference_title": "scInformer: transformer-based conditional generation for single-cell expression forecasting", "reference_url": "https://doi.org/10.1101/2024.03.01.583183"}, {"model": "cell2sentence", "method_type": "Transformer", "main_application": "Cell embedding / retrieval", "data_scale": "Large", "advantages": "Natural-language-style tokenization of cells", "limitations": "Task fit varies by downstream use", "reference_title": "cell2sentence: language-style representation learning for single cells", "reference_url": "https://doi.org/10.1101/2024.01.30.578341"}];
+    const data = [{"Model": "scVI", "Method Type": "VAE", "Main Application": "Single-cell RNA-seq analysis", "Data Scale": "Large", "Advantages": "Handles large-scale data well; robust imputation and denoising", "Limitations": "Limited validation in plants; no cross-species validation", "Relevant references": "Scvi-hub: an actionable repository for model-driven single-cell analysis", "Reference Link": "https://doi.org/10.1038/s41592-025-02799-9"}, {"Model": "scGAIN", "Method Type": "GAN", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Generates realistic imputations; handles dropout effectively", "Limitations": "Moderate scalability; no cross-species validation", "Relevant references": "scGAIN: Single Cell RNA-seq Data Imputation using Generative Adversarial Networks", "Reference Link": "https://doi.org/10.1101/837302"}, {"Model": "scMultiGAN", "Method Type": "GAN", "Main Application": "Cell-specific Imputation", "Data Scale": "Medium", "Advantages": "Effective for cell-specific imputation; handles data variability", "Limitations": "Limited scalability; no cross-species validation", "Relevant references": "scMultiGAN: cell-specific imputation for single-cell transcriptomes with multiple deep generative adversarial networks", "Reference Link": "https://doi.org/10.1093/bib/bbad384"}, {"Model": "scGGAN", "Method Type": "GAN + GCN", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Captures gene relationships; improves imputation accuracy", "Limitations": "Limited scalability; no cross-species validation", "Relevant references": "scGGAN: single-cell RNA-seq imputation by graph-based generative adversarial network", "Reference Link": "https://doi.org/10.1093/bib/bbad040"}, {"Model": "SCDD", "Method Type": "Diffusion Model", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Robust to sparse data; reduces information loss from missing values", "Limitations": "No cross-species validation; limited plant applications", "Relevant references": "SCDD: a novel single-cell RNA-seq imputation method with diffusion and denoising", "Reference Link": "https://doi.org/10.1093/bib/bbac398"}, {"Model": "scIDPMs", "Method Type": "Diffusion Model", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Effective for RNA-seq missing value imputation", "Limitations": "Limited cross-species validation; no plant applications", "Relevant references": "scIDPMs: single-cell RNA-seq imputation using diffusion probabilistic models", "Reference Link": "https://doi.org/10.1101/2024.02.29.582870"}, {"Model": "stDiff", "Method Type": "Diffusion Model", "Main Application": "Spatial Transcriptome Imputation", "Data Scale": "Medium", "Advantages": "Improves completion of spatial transcriptomics data", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "stDiff: a diffusion model for imputing spatial transcriptomics through single-cell transcriptomics", "Reference Link": "https://doi.org/10.1093/bib/bbae171"}, {"Model": "spaDiT", "Method Type": "Diffusion Model", "Main Application": "Spatial Transcriptome Imputation", "Data Scale": "Medium", "Advantages": "Improves spatial transcriptomics data accuracy", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "SpaDiT: Diffusion Transformer for Spatial Gene Expression Prediction using scRNA-seq", "Reference Link": "https://doi.org/10.1093/bib/bbae571"}, {"Model": "scDTL", "Method Type": "Transformer", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Handles sparse data; performs well across multiple tasks", "Limitations": "Moderate scalability; no cross-species validation", "Relevant references": "scDTL: enhancing single-cell RNA-seq imputation through deep transfer learning with bulk cell information", "Reference Link": "https://doi.org/10.1093/bib/bbae555"}, {"Model": "scTCA", "Method Type": "Transformer", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Improves denoising and imputation performance", "Limitations": "Moderate scalability; no cross-species validation", "Relevant references": "scTCA: a hybrid Transformer-CNN architecture for imputation and denoising of scDNA-seq data", "Reference Link": "https://doi.org/10.1093/bib/bbae577"}, {"Model": "scVAE", "Method Type": "VAE", "Main Application": "Single-cell RNA-seq", "Data Scale": "Large", "Advantages": "Captures low-dimensional structure; effective for high-dimensional data", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "scVAE: variational auto-encoders for single-cell gene expression data", "Reference Link": "https://doi.org/10.1093/bioinformatics/btaa293"}, {"Model": "VASC", "Method Type": "VAE", "Main Application": "Dimensionality Reduction and Clustering", "Data Scale": "Medium", "Advantages": "Effective for clustering and dimensionality reduction", "Limitations": "Moderate scalability; no cross-species validation", "Relevant references": "VASC: Dimension Reduction and Visualization of Single-cell RNA-seq Data by Deep Variational Autoencoder", "Reference Link": "https://doi.org/10.1016/j.gpb.2018.08.003"}, {"Model": "scPhere", "Method Type": "VAE", "Main Application": "Cell Clustering", "Data Scale": "Medium", "Advantages": "Improves clustering accuracy for heterogeneous cell populations", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Deep generative model embedding of single-cell RNA-Seq profiles on hyperspheres and hyperbolic spaces", "Reference Link": "https://doi.org/10.1038/s41467-021-22851-4"}, {"Model": "MichiGAN", "Method Type": "VAE + GAN", "Main Application": "Dimensionality Reduction and Clustering", "Data Scale": "Medium", "Advantages": "Learns low-dimensional representations; improves clustering precision", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Advances in haplotype phasing and genotype imputation", "Reference Link": "https://doi.org/10.1038/s41576-025-00895-2"}, {"Model": "PeakVI", "Method Type": "VAE", "Main Application": "ATAC-seq Dimensionality", "Data Scale": "Medium", "Advantages": "Corrects batch effects; effective for ATAC-seq datasets", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "PeakVI: A deep generative model for single-cell chromatin accessibility analysis", "Reference Link": "https://doi.org/10.1016/j.crmeth.2022.100182"}, {"Model": "totalVI", "Method Type": "VAE", "Main Application": "CITE-seq Data Integration", "Data Scale": "Large", "Advantages": "Integrates multi-omics datasets effectively", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Joint probabilistic modeling of single-cell multi-omic data with totalVI", "Reference Link": "https://doi.org/10.1038/s41592-020-01050-x"}, {"Model": "iMAP", "Method Type": "VAE + GAN", "Main Application": "Cross-platform Data Integration", "Data Scale": "Medium", "Advantages": "Removes batch effects; improves cross-platform consistency", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "iMAP: integration of multiple single-cell datasets by adversarial paired transfer networks", "Reference Link": "https://doi.org/10.1186/s13059-021-02280-8"}, {"Model": "scArches", "Method Type": "cVAE", "Main Application": "Data Integration", "Data Scale": "Medium", "Advantages": "Integrates datasets without sharing raw data", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Mapping single-cell data to reference atlases by transfer learning", "Reference Link": "https://doi.org/10.1038/s41587-021-01001-7"}, {"Model": "sysVI", "Method Type": "cVAE + VampPrior", "Main Application": "Batch Effect Removal", "Data Scale": "Large", "Advantages": "Efficient batch effect removal; scalable to large datasets", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "https://pubmed.ncbi.nlm.nih.gov/41168710/", "Reference Link": "https://doi.org/10.1186/s12864-025-12126-3"}, {"Model": "Cobolt", "Method Type": "MVAE", "Main Application": "Multi-modal Data Integration", "Data Scale": "Medium", "Advantages": "Effective integration across multiple omics modalities", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Cobolt: integrative analysis of multimodal single-cell sequencing data", "Reference Link": "https://doi.org/10.1186/s13059-021-02556-z"}, {"Model": "GLUE", "Method Type": "VGAE + Adversarial Learning", "Main Application": "Cross-Omics Data Integration", "Data Scale": "Large", "Advantages": "Robust cross-omics integration; resilient to batch effects", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Multi-omics single-cell data integration andregulatory inference with graph-linked embedding", "Reference Link": "https://doi.org/10.1038/s41587-022-01284-4"}, {"Model": "MultiVI", "Method Type": "VAE", "Main Application": "Data Imputation", "Data Scale": "Medium", "Advantages": "Handles missing data well; integrates multiple modalities", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "MultiVI: deep generative model for the integration of multimodal data", "Reference Link": "https://doi.org/10.1038/s41592-023-01909-9"}, {"Model": "scButterfly", "Method Type": "VAE + Dual Alignment", "Main Application": "Cross-modal Translation", "Data Scale": "Medium", "Advantages": "Enables cross-modal translation and improved alignment", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "scButterfly: a versatile single-cell cross-modality translation method via dual-aligned variational autoencoders", "Reference Link": "https://doi.org/10.1038/s41467-024-47418-x"}, {"Model": "scCross", "Method Type": "VAE + GAN + MNN", "Main Application": "Cross-modal Data Integration", "Data Scale": "Medium", "Advantages": "Strong cross-modal integration and data generation", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "scCross: a deep generative model for unifying single-cell multi-omics with seamless integration, cross-modal generation, and in silico exploration", "Reference Link": "https://doi.org/10.1186/s13059-024-03338-z"}, {"Model": "SATURN", "Method Type": "Protein Language Model", "Main Application": "Cross-species Data Integration", "Data Scale": "Large", "Advantages": "Handles species differences in protein datasets", "Limitations": "No plant validation", "Relevant references": "Toward universal cell embeddings: integrating single-cell RNA-seq datasets across species with SATURN", "Reference Link": "https://doi.org/10.1038/s41592-024-02191-z"}, {"Model": "scGen", "Method Type": "VAE", "Main Application": "Cross-species Data Integration", "Data Scale": "Large", "Advantages": "Captures biological variation across species", "Limitations": "No plant validation", "Relevant references": "scGen predicts single-cell perturbation responses", "Reference Link": "https://doi.org/10.1038/s41592-019-0494-8"}, {"Model": "scANVI", "Method Type": "VAE", "Main Application": "Cell Type Inference, Data Integration", "Data Scale": "Medium", "Advantages": "Effective semi-supervised cell type annotation", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "scANVI: Deep Generative Modeling for Single Cell Data with Pyro", "Reference Link": "https://pyro.ai/examples/scanvi.html"}, {"Model": "scAdapt", "Method Type": "GAN", "Main Application": "Cross-platform, Cross-species Data Integration", "Data Scale": "Medium", "Advantages": "Handles domain adaptation across platforms and species", "Limitations": "No plant applications", "Relevant references": "scAdapt: virtual adversarial domain adaptation network for single cell RNA-seq data classification across platforms and species", "Reference Link": "https://doi.org/10.1093/bib/bbab281"}, {"Model": "Cell BLAST", "Method Type": "VAE", "Main Application": "Cell Type Matching, New Type Discovery", "Data Scale": "Medium", "Advantages": "Fast and efficient matching of cell types", "Limitations": "No plant applications", "Relevant references": "Searching large-scale scRNA-seq databases via unbiased cell embedding with Cell BLAST", "Reference Link": "https://doi.org/10.1038/s41467-020-17281-7"}, {"Model": "PRESCIENT", "Method Type": "Diffusion Model", "Main Application": "Cell Differentiation Modeling, Trajectory Inference", "Data Scale": "Medium", "Advantages": "Effective for modeling cell differentiation trajectories", "Limitations": "No plant applications", "Relevant references": "Are LLMs Prescient? A Continuous Evaluation using Daily News as the Oracle", "Reference Link": "https://doi.org/10.48550/arXiv.2411.08324"}, {"Model": "DeepSEM", "Method Type": "VAE + Structural Equation Model", "Main Application": "Gene Regulatory Network (GRN) Inference", "Data Scale": "Medium", "Advantages": "Integrates gene regulatory network structure", "Limitations": "No plant applications", "Relevant references": "DeepSEM-Net: Enhancing SEM defect analysis in semiconductor manufacturing with a dual-branch CNN-Transformer architecture", "Reference Link": "https://doi.org/10.1016/j.cie.2024.110301"}, {"Model": "DigNet", "Method Type": "Diffusion Model", "Main Application": "Gene Regulatory Network (GRN) Inference", "Data Scale": "Medium", "Advantages": "Robust to sparse data; effective for complex networks", "Limitations": "No plant applications", "Relevant references": "Dignet: an unsupervised-learning clustering algorithm for clustering and data fusion", "Reference Link": "https://doi.org/10.1109/7.366289"}, {"Model": "scGREAT", "Method Type": "Transformer", "Main Application": "Gene Regulatory Network (GRN) Inference", "Data Scale": "Medium", "Advantages": "Improves gene regulation prediction accuracy", "Limitations": "No plant applications", "Relevant references": "scGREAT: Transformer-based deep-language model for gene regulatory network inference from single-cell transcriptomics", "Reference Link": "https://doi.org/10.1016/j.isci.2024.109352"}, {"Model": "DeepKINET", "Method Type": "VAE + RNA Velocity", "Main Application": "mRNA Splicing and Degradation Rate Estimation, Regulatory Mechanism Inference", "Data Scale": "Medium", "Advantages": "Provides insight into RNA metabolism and gene regulation", "Limitations": "No plant applications", "Relevant references": "DeepKINET: a deep generative model for estimating single-cell RNA splicing and degradation rates", "Reference Link": "https://doi.org/10.1186/s13059-024-03367-8"}, {"Model": "veloVI", "Method Type": "VAE + RNA Velocity", "Main Application": "RNA Metabolism Modeling, Gene Expression Regulation", "Data Scale": "Medium", "Advantages": "Effective modeling of RNA dynamics", "Limitations": "No plant applications", "Relevant references": "Deep generative modeling of transcriptional dynamics for RNA velocity analysis in single cells", "Reference Link": "https://doi.org/10.1038/s41592-023-01994-w"}, {"Model": "CIForm", "Method Type": "Transformer", "Main Application": "Cell Type Annotation", "Data Scale": "Medium", "Advantages": "Fast and accurate annotation", "Limitations": "No plant applications", "Relevant references": "CIForm as a Transformer-based model for cell-type annotation of large-scale single-cell RNA-seq data", "Reference Link": "https://doi.org/10.1093/bib/bbad195"}, {"Model": "TOSICA", "Method Type": "Transformer", "Main Application": "Cell Type Annotation", "Data Scale": "Medium", "Advantages": "Efficient annotation for large datasets", "Limitations": "No plant applications", "Relevant references": "Transformer for one stop interpretable cell type annotation", "Reference Link": "https://doi.org/10.1038/s41467-023-35923-4"}, {"Model": "GPT-4", "Method Type": "Transformer", "Main Application": "Cell Type Annotation", "Data Scale": "Medium", "Advantages": "High accuracy in annotation tasks", "Limitations": "No plant applications", "Relevant references": "Peer review of GPT-4 technical report and systems card", "Reference Link": "https://doi.org/10.1371/journal.pdig.0000417"}, {"Model": "scGAN", "Method Type": "GAN", "Main Application": "Single-cell RNA-seq Data Generation", "Data Scale": "Medium", "Advantages": "Generates realistic synthetic RNA-seq data", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "ScGAN: A Generative Adversarial Network to Predict Hypothetical Superconductors", "Reference Link": "https://doi.org/10.48550/arXiv.2209.03444"}, {"Model": "cscGAN", "Method Type": "cGAN", "Main Application": "Conditional Single-cell RNA-seq Data Generation", "Data Scale": "Medium", "Advantages": "Generates specific cell types with controlled conditions", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "Realistic in silico generation and augmentation of single-cell RNA-seq data using generative adversarial networks", "Reference Link": "https://doi.org/10.1038/s41467-019-14018-z"}, {"Model": "ACTIVA", "Method Type": "VAE + GAN", "Main Application": "Cell Type Information-driven Data Generation", "Data Scale": "Medium", "Advantages": "Effective simulation of rare cell types", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "ACTIVA: realistic single-cell RNA-seq generation with automatic cell-type identification using introspective variational autoencoders", "Reference Link": "https://doi.org/10.1093/bioinformatics/btac095"}, {"Model": "scDiffusion", "Method Type": "Diffusion Model + Base Generative Model", "Main Application": "High-quality Single-cell RNA Data Generation, Cell Development Trajectory Simulation", "Data Scale": "Medium", "Advantages": "Simulates continuous developmental trajectories", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "scDiffusion: conditional generation of high-quality single-cell data using diffusion model", "Reference Link": "https://doi.org/10.1093/bioinformatics/btae518"}, {"Model": "GRouNdGAN", "Method Type": "CausalGAN", "Main Application": "Gene Regulatory Network (GRN)-Driven Data Generation", "Data Scale": "Medium", "Advantages": "Models causal gene regulatory relationships", "Limitations": "No cross-species validation; no plant validation", "Relevant references": "GRouNdGAN: GRN-guided simulation of single-cell RNA-seq data using causal generative adversarial networks", "Reference Link": "https://doi.org/10.1038/s41467-024-48516-6"}, {"Model": "scBERT", "Method Type": "Transformer (Pretrained Expression Model)", "Main Application": "Gene Expression Modeling, Cell Type Annotation, Trajectory Inference", "Data Scale": "Large", "Advantages": "Captures gene expression patterns effectively", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "scBERT: a Large-scale Pretrained Deep Langurage Model for Cell Type Annotation of Single-cell RNA-seq Data", "Reference Link": "https://doi.org/10.1101/2021.12.05.471261"}, {"Model": "Geneformer", "Method Type": "Transformer (Pretrained Expression Model)", "Main Application": "Gene Expression Modeling, Cell Type Annotation, Trajectory Inference", "Data Scale": "Large", "Advantages": "Strong performance in annotation tasks", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "Transfer learning enables predictions in network biology", "Reference Link": "https://doi.org/10.1038/s41586-023-06139-9"}, {"Model": "scGPT", "Method Type": "Transformer (Pretrained Expression Model)", "Main Application": "Gene Expression Modeling, Perturbation Effect Prediction", "Data Scale": "Large", "Advantages": "Effective modeling of perturbation effects", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "scGPT: toward building a foundation model for single-cell multi-omics using generative AI", "Reference Link": "https://doi.org/10.1038/s41592-024-02201-0"}, {"Model": "scFoundation", "Method Type": "Transformer (Multi-modal Alignment Model)", "Main Application": "Multi-modal Data Integration, Cell Type Annotation, Cross-Omics Analysis", "Data Scale": "Large", "Advantages": "Strong multi-modal integration performance", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "Large-scale foundation model on single-cell transcriptomics", "Reference Link": "https://doi.org/10.1038/s41592-024-02305-7"}, {"Model": "scPlantLLM", "Method Type": "Transformer (Conditional Generative Model)", "Main Application": "Generation of Specific Cell Type Data, Rare Cell Type Modeling", "Data Scale": "Medium", "Advantages": "Useful for modeling rare plant cell types", "Limitations": "Limited validation; no cross-species validation", "Relevant references": "scPlantLLM: A Foundation Model for Exploring Single-cell Expression Atlases in Plants", "Reference Link": "https://doi.org/10.1093/gpbjnl/qzaf024"}, {"Model": "scPlantFormer", "Method Type": "Transformer (Conditional Generative Model)", "Main Application": "Cross-tissue, Cross-developmental Stages Plant Cell Type Annotation", "Data Scale": "Medium", "Advantages": "Designed for plant single-cell datasets", "Limitations": "Limited validation; no cross-species validation", "Relevant references": "Transformative advances in single-cell omics: a comprehensive review of foundation models, multimodal integration and computational ecosystems", "Reference Link": "https://doi.org/10.1186/s12967-025-07091-0"}, {"Model": "scMulan", "Method Type": "Generative Pretrained Model (Multi-task Generation)", "Main Application": "Cell Type Annotation, Expression Prediction, Synthetic Cell Generation", "Data Scale": "Medium", "Advantages": "Flexible multi-task learning framework", "Limitations": "No cross-species validation; no plant applications", "Relevant references": "scMulan: a multitask generative pre-trained language model for single-cell analysis", "Reference Link": "https://doi.org/10.1101/2024.01.25.577152"}];
 
     const searchInput = document.getElementById("search");
     const methodFilter = document.getElementById("methodFilter");
@@ -504,12 +484,12 @@
     const statResults = document.getElementById("stat-results");
     const headers = Array.from(document.querySelectorAll("th[data-key]"));
 
-    let sortKey = "model";
+    let sortKey = "Model";
     let sortAsc = true;
 
     function uniqueValues(key) {
       return [...new Set(data.map((item) => item[key]).filter(Boolean))].sort((a, b) =>
-        a.localeCompare(b)
+        String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" })
       );
     }
 
@@ -536,6 +516,7 @@
 
     function compareText(a, b) {
       return String(a || "").localeCompare(String(b || ""), undefined, {
+        numeric: true,
         sensitivity: "base"
       });
     }
@@ -549,9 +530,9 @@
       const filtered = data.filter((item) => {
         return (
           matches(item, keyword) &&
-          (!method || item.method_type === method) &&
-          (!app || item.main_application === app) &&
-          (!scale || item.data_scale === scale)
+          (!method || item["Method Type"] === method) &&
+          (!app || item["Main Application"] === app) &&
+          (!scale || item["Data Scale"] === scale)
         );
       });
 
@@ -587,23 +568,26 @@
       emptyState.style.display = "none";
       tableBody.innerHTML = filtered
         .map((item) => {
-          const titleHtml = item.reference_title
-            ? `<a class="ref-title" href="${escapeHtml(item.reference_url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.reference_title)}</a>`
-            : '<span class="muted">—</span>';
+          const title = item["Relevant references"] || "—";
+          const url = item["Reference Link"] || "";
+          const titleHtml = url
+            ? `<a class="title-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>`
+            : `<span>${escapeHtml(title)}</span>`;
 
-          const refActions = item.reference_url
-            ? `<div class="ref-actions"><a class="ref-btn" href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer">Open DOI</a></div>`
+          const linkHtml = url
+            ? `<div class="link-actions"><a class="link-btn" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open DOI</a></div>`
             : '<span class="muted">No link</span>';
 
           return `
             <tr>
-              <td><span class="model">${escapeHtml(item.model || "—")}</span></td>
-              <td><span class="chip">${escapeHtml(item.method_type || "—")}</span></td>
-              <td>${escapeHtml(item.main_application || "—")}</td>
-              <td>${item.data_scale ? `<span class="chip">${escapeHtml(item.data_scale)}</span>` : "—"}</td>
-              <td>${escapeHtml(item.advantages || "—")}</td>
-              <td>${escapeHtml(item.limitations || "—")}</td>
-              <td>${titleHtml}${refActions}</td>
+              <td><span class="model">${escapeHtml(item["Model"] || "—")}</span></td>
+              <td><span class="chip">${escapeHtml(item["Method Type"] || "—")}</span></td>
+              <td>${escapeHtml(item["Main Application"] || "—")}</td>
+              <td>${item["Data Scale"] ? `<span class="chip">${escapeHtml(item["Data Scale"])}</span>` : "—"}</td>
+              <td>${escapeHtml(item["Advantages"] || "—")}</td>
+              <td>${escapeHtml(item["Limitations"] || "—")}</td>
+              <td>${titleHtml}</td>
+              <td>${linkHtml}</td>
             </tr>
           `;
         })
@@ -636,18 +620,18 @@
       methodFilter.value = "";
       appFilter.value = "";
       scaleFilter.value = "";
-      sortKey = "model";
+      sortKey = "Model";
       sortAsc = true;
       renderTable();
     });
 
-    fillSelect(methodFilter, uniqueValues("method_type"), "Method type");
-    fillSelect(appFilter, uniqueValues("main_application"), "Application");
-    fillSelect(scaleFilter, uniqueValues("data_scale"), "Data scale");
+    fillSelect(methodFilter, uniqueValues("Method Type"), "Method Type");
+    fillSelect(appFilter, uniqueValues("Main Application"), "Application");
+    fillSelect(scaleFilter, uniqueValues("Data Scale"), "Data Scale");
 
     statModels.textContent = data.length;
-    statMethods.textContent = uniqueValues("method_type").length;
-    statApps.textContent = uniqueValues("main_application").length;
+    statMethods.textContent = uniqueValues("Method Type").length;
+    statApps.textContent = uniqueValues("Main Application").length;
     renderTable();
   </script>
 </body>
